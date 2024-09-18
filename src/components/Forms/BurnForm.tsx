@@ -9,6 +9,26 @@ import {BurnFormData} from "src/types/Forms.ts";
 import useDepositForBurn from "src/hooks/useDepositForBurn.tsx";
 import getInputPatternRules from "src/helpers/getInputPatternRules.ts";
 
+
+const initialFormState = [
+    {
+        id: 'amount',
+        type: 'text',
+        value: '',
+        placeholder: "Mint amount",
+        buttonLabel: "ADD MAX",
+        innerButtonValue: '',
+    },
+    {
+        id: 'ethAddress',
+        type: 'text',
+        value: '',
+        placeholder: "ETH recipient address",
+        buttonLabel: "COPY FROM WALLET",
+        innerButtonValue: '',
+    }
+]
+
 const BurnForm = ({
                       setTxHash,
                   }: {
@@ -18,24 +38,7 @@ const BurnForm = ({
         const {nobleState: {address: nobleAddress, balance: nobleBalance}} = useContext(NobleContext);
 
         const [burnButtonClicked, setBurnButtonClicked] = useState(false);
-        const [formData, setFormData] = useState<BurnFormData>([
-            {
-                id: 'amount',
-                type: 'text',
-                value: '',
-                placeholder: "Mint amount",
-                buttonLabel: "ADD MAX",
-                innerButtonValue: '',
-            },
-            {
-                id: 'ethAddress',
-                type: 'text',
-                value: '',
-                placeholder: "ETH recipient address",
-                buttonLabel: "COPY FROM WALLET",
-                innerButtonValue: '',
-            }
-        ]);
+        const [formData, setFormData] = useState<BurnFormData>(initialFormState);
         const {execute, data, loading, error} = useDepositForBurn({amount: formData[0].value, address: formData[1].value});
         const [errorDuringDeposit, setErrorDuringDeposit] = useState(Boolean(error));
 

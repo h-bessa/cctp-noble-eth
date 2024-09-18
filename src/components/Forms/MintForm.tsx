@@ -8,6 +8,25 @@ import fetchAttestation from "src/helpers/fetchAttestation.ts";
 import {getGenericContract} from "src/helpers/getGenericContract.ts";
 import contractABI from "src/services/contractABI.ts";
 
+
+
+const initialFormState = [
+    {
+        id: 'txHash',
+        type: 'text',
+        value: '',
+        placeholder: "burn tx hash",
+        buttonLabel: "",
+        maxValue: '',
+    },
+    {
+        id: 'attestation',
+        type: 'text',
+        value: '',
+        placeholder: "attestation hash - status",
+        buttonLabel: "GET",
+    }
+]
 const MintForm = ({
                       txHash
                   }: {
@@ -21,24 +40,7 @@ const MintForm = ({
 
     const [error, setError] = useState<boolean>(false);
 
-    const [formData, setFormData] = useState<MintFormData>(
-        [
-            {
-                id: 'txHash',
-                type: 'text',
-                value: '',
-                placeholder: "burn tx hash",
-                buttonLabel: "",
-                maxValue: '',
-            },
-            {
-                id: 'attestation',
-                type: 'text',
-                value: '',
-                placeholder: "attestation hash - status",
-                buttonLabel: "GET",
-            }
-        ]);
+    const [formData, setFormData] = useState<MintFormData>(initialFormState);
 
     const isFormValid = formData.every((input) => input.value !== '') &&
         formData.some(input => input.id === 'attestation' && input.value?.toString().startsWith('0x'));
